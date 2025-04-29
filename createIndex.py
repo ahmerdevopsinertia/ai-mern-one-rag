@@ -1,7 +1,6 @@
 import os
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-# from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 from pinecone import Pinecone, ServerlessSpec
 from dotenv import load_dotenv
@@ -29,20 +28,15 @@ pc.create_index(
     spec=ServerlessSpec(cloud="aws", region="us-east-1")
 )
 
-# 4. Create embeddings
-# embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")  # 384-dim
-
 try:
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-except Exception as e:
-    print(f"Failed to load embeddings model: {str(e)}")
-    raise
-
-embeddings = HuggingFaceEmbeddings(
+    embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2",
     model_kwargs={'device': 'cpu'},  # Add if you want to specify CPU/GPU
     encode_kwargs={'normalize_embeddings': True}  # Recommended for cosine similarity
 )
+except Exception as e:
+    print(f"Failed to load embeddings model: {str(e)}")
+    raise
 
 # 5. Upload to Pinecone
 index = pc.Index(index_name)
@@ -71,6 +65,6 @@ def query_pinecone(query: str, index_name: str, top_k: int = 3):
     return [match.metadata["text"] for match in results.matches]
 
 # 3. Usage
-answers = query_pinecone("What is the leave policy?", "edu-staff-policies-v1")
+answers = query_pinecone("HR policy", "edu-staff-policies-v1")
 for answer in answers:
     print(answer)
