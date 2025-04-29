@@ -1,0 +1,37 @@
+# macOS system files
+.DS_Store
+
+# Python virtual environments
+venv/
+.venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables
+.env
+
+# Logs and temp files
+*.log
+*.tmp
+
+# IDE/editor-specific folders
+.vscode/
+.idea/
+
+# Jupyter notebook checkpoints (if any)
+.ipynb_checkpoints/
+
+# OS-specific trash folders
+.Trash-*/
+
+# If you ever use Pipenv
+Pipfile.lock
+
+# Build artifacts (optional if you use packaging tools)
+build/
+dist/
+*.egg-info/
