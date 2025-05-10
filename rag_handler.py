@@ -94,12 +94,12 @@ def get_cache_key(query):
 def get_rag_context(query):
   try:
         cache = Redis(host='localhost', port=6379, db=0)
-        cache.set("test", "Redis is running")
-        print(cache.get("test").decode())
+        # cache.set("test", "Redis is running")
+        # print(cache.get("test").decode())
         
-        if cached := cache.get(get_cache_key(query)):
-            print("Cache hit")
-            return json.loads(cached)
+        # if cached := cache.get(get_cache_key(query)):
+        #     print("Cache hit")
+        #     return json.loads(cached)
 
         # 1. Get relevant policy chunks
         original_embedding = embeddings.embed_query(query)
